@@ -1,4 +1,5 @@
 """SQL tổng hợp và nối hồ sơ; không cache dữ liệu bệnh nhân."""
+import logging
 import pandas as pd
 import data
 from google.cloud import bigquery
@@ -82,5 +83,10 @@ def load_profiles(bq, fields, location, latest, levels, minimum):
         return pd.DataFrame([dict(row) for row in rows], columns=[f.name for f in rows.schema]), None
     except (Forbidden, NotFound):
         return None, "Chưa đọc được gold.wide_table. Cần BigQuery Data Viewer trên bảng này để phân tích hồ sơ; các biểu đồ dự báo vẫn hoạt động."
-    except (GoogleAPICallError, TimeoutError, ValueError):
-        return None, "Chưa tải được hồ sơ từ wide_table. Kiểm tra kiểu cột, quyền, vùng và giới hạn 2 GB/truy vấn."
+    except GoogleAPICallError as error:
+        # Log the API message server-side; never log credentials or HTTP headers.
+        logging.getLogger(__name__).error("PROFILE_QUERY_ERROR %s: %s", type(error).__name__, error.message)
+        return None, "BigQuery từ chối truy vấn hồ sơ. Mở Manage app → Logs, tìm dòng PROFILE_QUERY_ERROR và gửi nội dung lỗi để xác định đúng nguyên nhân. Không cần thay Secrets."
+    except (TimeoutError, ValueError) as error:
+        logging.getLogger(__name__).error("PROFILE_QUERY_ERROR %s", type(error).__name__)
+        return None, "Chưa tải được hồ sơ: hết thời gian chờ hoặc dữ liệu chưa đúng định dạng. Xem dòng PROFILE_QUERY_ERROR trong Manage app → Logs."

@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import Mock
 from types import SimpleNamespace
 import pandas as pd
-from google.api_core.exceptions import NotFound
+from google.api_core.exceptions import NotFound, BadRequest
 from analytics import cohort, profile_sql, load_profiles, PROFILE_FIELDS
 from data import REQUIRED
 import charts
@@ -48,6 +48,18 @@ class AnalyticsTests(unittest.TestCase):
         bq.get_table.return_value = SimpleNamespace(location="US", schema=[])
         frame, reason = load_profiles(bq, FIELDS, "US", True, ["Cao"], 0)
         self.assertIn("đủ", reason)
+
+    def test_profile_api_failure_logs_diagnostic_without_displaying_it(self):
+        bq = Mock()
+        bq.get_table.return_value = SimpleNamespace(location="US", schema=[SimpleNamespace(name=n) for n in PROFILE_FIELDS | {"patient_nbr", "encounter_id"}])
+        bq.query.side_effect = BadRequest("Diagnostic SQL message for server log only")
+        with self.assertLogs("analytics", level="ERROR") as logs:
+            frame, reason = load_profiles(bq, FIELDS, "US", True, ["Cao"], 0)
+        self.assertIsNone(frame)
+        self.assertIn("PROFILE_QUERY_ERROR", reason)
+        self.assertNotIn("Diagnostic SQL message", reason)
+        self.assertIn("Diagnostic SQL message", logs.output[0])
+        self.assertIn("BadRequest", logs.output[0])
 
     def test_chart_specs(self):
         distribution = pd.DataFrame([dict(risk_level="Cao", prediction_count=5, share=.5)])
