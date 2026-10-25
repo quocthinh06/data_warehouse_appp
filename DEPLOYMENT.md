@@ -2,7 +2,7 @@
 
 ## 1. Mã nguồn
 
-Repository đã tạo và push: quocthinhtb/diabetes-readmission-dashboard, private. Branch main, entrypoint app.py. Chỉ có mã app, CSV chỉ số tổng hợp, tài liệu và tests; không đưa notebook, khóa hay dữ liệu bệnh nhân lên GitHub.
+Repository đích: quocthinh06/data_warehouse_appp, public. Branch main, entrypoint app.py. Chỉ có mã app, CSV chỉ số tổng hợp, tài liệu và tests; không đưa notebook, khóa hay dữ liệu bệnh nhân lên GitHub.
 
 ## 2. Việc bạn cần làm trong tài khoản Google Cloud
 
@@ -16,8 +16,8 @@ Mở project diabetes-pipeline-511509 trong Google Cloud Console:
 
 ## 3. Streamlit Community Cloud
 
-1. Vào https://share.streamlit.io, đăng nhập và kết nối GitHub quocthinhtb; cấp quyền repo private khi Streamlit yêu cầu.
-2. Create app → Deploy an app from GitHub. Chọn repository quocthinhtb/diabetes-readmission-dashboard, branch main, Main file path app.py.
+1. Vào https://share.streamlit.io, đăng nhập và kết nối GitHub quocthinh06; cấp quyền repo private khi Streamlit yêu cầu.
+2. Create app → Deploy an app from GitHub. Chọn repository quocthinh06/data_warehouse_appp, branch main, Main file path app.py.
 3. Advanced settings → Python 3.12.
 4. Trong Secrets, dùng đúng định dạng dưới đây. Dán nguyên nội dung file JSON giữa hai dòng dấu nháy đơn ba ký tự. Không thêm dấu #. Không đặt thêm [gcp_service_account] nếu dùng cách này.
 
@@ -47,3 +47,7 @@ Streamlit hiện chỉ cho một private app mỗi tài khoản; nếu đã dùn
 Trạng thái chưa có credential hoặc URL deploy: chưa hoàn tất deployment. Không lưu secret vào file tiến độ.
 
 Nguồn: https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy ; https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management ; https://docs.streamlit.io/deploy/streamlit-community-cloud/share-your-app
+
+## Quyền GitHub cần hoàn tất
+
+Repository đúng là quocthinh06/data_warehouse_appp (public, đang rỗng ở lần kiểm tra). GitHub CLI trên máy đang đăng nhập quocthinhtb và chỉ có quyền READ tại repo này. Người dùng cần đăng nhập CLI bằng quocthinh06 trước khi trợ lý push. Không gửi token vào chat. Repo public không chứa khóa hoặc dữ liệu bệnh nhân; app phải kiểm tra lại quyền xem sau deploy.

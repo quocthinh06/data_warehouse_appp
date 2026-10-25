@@ -57,7 +57,7 @@ Project cần bật BigQuery API và cấu hình thanh toán thích hợp. Ứng
 
 ## Deploy Streamlit Community Cloud
 
-1. Kiểm thử local trước. Đưa mã nguồn vào repository do bạn kiểm soát; xem lại thay đổi để loại mọi khóa và dữ liệu bệnh nhân. Mã nguồn đã có trên repository private https://github.com/quocthinhtb/diabetes-readmission-dashboard, branch main.
+1. Kiểm thử local trước. Đưa mã nguồn vào repository do bạn kiểm soát; xem lại thay đổi để loại mọi khóa và dữ liệu bệnh nhân. Repository đích: https://github.com/quocthinh06/data_warehouse_appp, branch main. Đang chờ đăng nhập tài khoản có quyền ghi để push.
 2. Nếu muốn CSV đánh giá được đóng gói, chỉ đưa CSV chỉ số tổng hợp đã kiểm tra vào repo, tệp data/evaluation_metrics.csv đã được cho phép trong Git; các CSV khác vẫn bị bỏ qua. Không đưa CSV cấp bệnh nhân lên repo. Hoặc tải CSV tại giao diện mỗi phiên.
 3. Trên Community Cloud tạo app từ repository, chọn `app.py`, Python 3.12, cài bằng `requirements.txt`.
 4. Trong Advanced settings / Secrets, cấu hình `[gcp_service_account]` bằng thông tin thật. Không upload file khóa vào repository. Đảm bảo service account có hai quyền BigQuery ở trên.
