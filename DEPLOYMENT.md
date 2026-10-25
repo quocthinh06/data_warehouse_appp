@@ -2,7 +2,7 @@
 
 ## 1. Mã nguồn
 
-Repository dự kiến: quocthinhtb/diabetes-readmission-dashboard, private. Branch main, entrypoint app.py. Chỉ có mã app, CSV chỉ số tổng hợp, tài liệu và tests; không đưa notebook, khóa hay dữ liệu bệnh nhân lên GitHub.
+Repository đã tạo và push: quocthinhtb/diabetes-readmission-dashboard, private. Branch main, entrypoint app.py. Chỉ có mã app, CSV chỉ số tổng hợp, tài liệu và tests; không đưa notebook, khóa hay dữ liệu bệnh nhân lên GitHub.
 
 ## 2. Việc bạn cần làm trong tài khoản Google Cloud
 
