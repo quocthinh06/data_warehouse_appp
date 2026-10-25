@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.streamlit/secrets.toml
+*credentials*.json
+*service*account*.json
+data/*.csv
+!data/.gitkeep
+!data/evaluation_metrics.csv
+.pytest_cache/
