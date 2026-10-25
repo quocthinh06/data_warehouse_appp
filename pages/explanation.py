@@ -1,26 +1,36 @@
 import streamlit as st
 from data import connect, batch_control, patient_rows
 from metrics import split_items
+from ui import heading, kpis, feature_label, note
 
-st.title("Giải thích AI")
-st.caption("Các yếu tố và hành động được pipeline Giai đoạn 3 lưu trong BigQuery.")
+heading("Giải thích AI", "Hiểu lý do một lượt khám được ưu tiên và xem hành động theo dõi do pipeline đề xuất.")
 bq, fields, location = connect()
-rows = patient_rows(bq, fields, location, batch_control(fields))
+latest = batch_control(fields)
+with st.container(key="patient_filters"):
+    rows = patient_rows(bq, fields, location, latest)
 if rows.empty:
-    st.info("Không có bản ghi phù hợp.")
+    st.info("Không có bản ghi phù hợp. Hãy đổi bộ lọc hoặc số trang.")
     st.stop()
-index = st.selectbox("Chọn lượt khám", range(len(rows)), format_func=lambda i:
+index = st.selectbox("Chọn lượt khám để phân tích", range(len(rows)), format_func=lambda i:
     f"BN {rows.iloc[i].patient_nbr} · Lượt {rows.iloc[i].encounter_id} · {rows.iloc[i].risk_score:.4f}")
 row = rows.iloc[index]
-st.subheader(f"Bệnh nhân {row.patient_nbr}")
-st.write(f"Mức nguy cơ: **{row.risk_level}** · Điểm: **{row.risk_score:.4f}**")
-left, right = st.columns(2)
-with left:
-    st.subheader("Yếu tố được ghi nhận")
-    for item in split_items(row.top_factors):
-        st.text("• " + item)
-with right:
-    st.subheader("Hành động từ pipeline")
-    for item in split_items(row.recommended_actions):
-        st.text("• " + item)
-st.info("Notebook tạo top_factors từ tối đa 3 giá trị SHAP dương lớn nhất. Bảng chỉ lưu tên yếu tố, không lưu giá trị SHAP, nên dashboard không vẽ độ lớn tác động hoặc suy ra quan hệ nhân quả. Hành động được hiển thị nguyên văn để chuyên môn rà soát.")
+kpis([
+    ("Mã bệnh nhân", row.patient_nbr, "Định danh trong tập dữ liệu"),
+    ("Lượt khám", row.encounter_id, "Bản ghi đang phân tích"),
+    ("Nhóm nguy cơ", row.risk_level, "Phân tầng từ pipeline"),
+    ("Điểm dự báo", f"{row.risk_score:.4f}", "Thang điểm 0–1"),
+])
+left, right = st.columns([1, 1.3])
+with left, st.container(border=True, key="panel_reasons"):
+    st.subheader("Yếu tố thúc đẩy dự báo")
+    st.caption("Tối đa 3 yếu tố SHAP dương lớn nhất, theo notebook nguồn")
+    for factor in split_items(row.top_factors):
+        st.text(feature_label(factor))
+        st.text(factor)
+        st.divider()
+with right, st.container(border=True, key="panel_actions"):
+    st.subheader("Hành động theo dõi đề xuất")
+    st.caption("Ánh xạ quy tắc từ yếu tố; cần chuyên môn rà soát")
+    for i, action in enumerate(split_items(row.recommended_actions), 1):
+        st.text(f"{i}. {action}")
+note("Giới hạn giải thích", "Bảng chỉ lưu tên yếu tố, không có giá trị SHAP nên không thể vẽ độ lớn tác động hoặc suy ra quan hệ nhân quả. Hành động hiển thị nguyên văn từ pipeline; không do chatbot tạo mới.")

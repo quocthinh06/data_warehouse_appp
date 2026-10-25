@@ -1,8 +1,14 @@
 [theme]
-primaryColor = "#176B59"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F2F5F3"
-textColor = "#152E28"
+base = "light"
+primaryColor = "#087F83"
+backgroundColor = "#F3F6FA"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#142D4E"
 font = "sans serif"
+dataframeHeaderTextColor = "#526579"
+dataframeHeaderBackgroundColor = "#EEF3F8"
+dataframeBorderColor = "#E2E9F0"
 [client]
 showErrorDetails = "none"
+[server]
+maxUploadSize = 5

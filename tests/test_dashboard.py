@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 import pandas as pd
+import streamlit as st
 from streamlit.testing.v1 import AppTest
 from data import REQUIRED, detail_sql, scope, client
 from metrics import read_metrics, split_items
@@ -38,18 +39,35 @@ class DashboardTests(unittest.TestCase):
         self.assertEqual(split_items(" A | | B "), ["A", "B"])
 
     def test_overview(self):
-        summary = pd.DataFrame([dict(total_predictions=1, unique_patients=1, avg_score=0.8, min_score=0.8, max_score=0.8)])
-        distribution = pd.DataFrame([dict(risk_level="Cao", prediction_count=1, unique_patients=1, avg_score=0.8, min_score=0.8, max_score=0.8)])
-        with patch("data.connect", return_value=(None, FIELDS, "US")), patch("data.query", side_effect=[summary, distribution, pd.DataFrame([{"latest": "2026-10-25"}])]):
-            app = AppTest.from_file(str(ROOT / "pages/overview.py")).run()
+        summary = pd.DataFrame([dict(total_predictions=1, unique_patients=1, avg_score=0.8, invalid_scores=0, latest="2026-10-25")])
+        distribution = pd.DataFrame([dict(risk_level="Cao", prediction_count=1, avg_score=0.8)])
+        histogram = pd.DataFrame([dict(risk_level="Cao", score_start=0.8, score_end=0.85, prediction_count=1)])
+        factors = pd.DataFrame([dict(factor="number_inpatient", prediction_count=1)])
+        with patch("data.connect", return_value=(None, FIELDS, "US")), patch("data.query", side_effect=[summary, distribution, histogram, factors]), patch("analytics.load_profiles", return_value=(None, "Chưa có hồ sơ")):
+            app = AppTest.from_file(str(ROOT / "app.py")).run()
         self.assertEqual(list(app.exception), [])
-        self.assertEqual(len(app.metric), 3)
+        self.assertEqual(app.dataframe[0].value.iloc[0]["Lượt dự báo"], 1)
+
+    def test_empty_overview(self):
+        summary = pd.Series(dict(total_predictions=0, unique_patients=0, avg_score=None))
+        with patch("data.connect", return_value=(None, FIELDS, "US")), patch("analytics.load_overview", return_value=(summary, None, None, None)):
+            app = AppTest.from_file(str(ROOT / "app.py")).run()
+        self.assertEqual(list(app.exception), [])
+        self.assertTrue(app.info)
+        with patch("data.connect", return_value=(None, FIELDS, "US")), patch("analytics.load_overview") as load:
+            app.multiselect[0].set_value([]).run()
+            load.assert_not_called()
+        self.assertEqual(list(app.exception), [])
 
     def test_patient_pages(self):
         for page in ["priority", "explanation"]:
             for rows in [pd.DataFrame([ROW]), pd.DataFrame(columns=ROW)]:
                 with self.subTest(page=page, empty=rows.empty), patch("data.connect", return_value=(None, FIELDS, "US")), patch("data.query", return_value=rows):
-                    app = AppTest.from_file(str(ROOT / f"pages/{page}.py")).run()
+                    app = AppTest.from_file(str(ROOT / "app.py"))
+                    # Register navigation without querying an unrelated page.
+                    with patch("data.connect", side_effect=st.stop):
+                        app.run()
+                    app.switch_page(f"pages/{page}.py").run()
                     self.assertEqual(list(app.exception), [])
                     if rows.empty:
                         self.assertTrue(app.info)
@@ -77,6 +95,14 @@ class DashboardTests(unittest.TestCase):
         app.selectbox[0].set_value("5%").run()
         self.assertEqual(list(app.exception), [])
         self.assertEqual(set(app.dataframe[0].value["K"]), {715})
+
+    def test_numeric_topk_labels(self):
+        frame = read_metrics(ROOT / "data/evaluation_metrics.csv")
+        frame["Top %"] = frame["Top %"].str.rstrip("%").astype(int)
+        with patch("metrics.read_metrics", return_value=frame):
+            app = AppTest.from_file(str(ROOT / "pages/performance.py")).run()
+        self.assertEqual(list(app.exception), [])
+        self.assertEqual(app.selectbox[0].value, 10)
 
     def test_topk_validation(self):
         good = read_metrics(ROOT / "data/evaluation_metrics.csv")

@@ -34,3 +34,13 @@ Nếu nguồn chưa đổi từ ngày 25/10/2026, có thể đối chiếu 14.30
 Diễn giải đúng: XGBoost Top 10% có Precision@K≈17,27%, Recall@K≈19,62%, Lift≈1,96. Nghĩa là ưu tiên 1.430 người bắt được khoảng 19,62% ca dương của tập test. Không gọi 17,27% là accuracy. Cao=1.431 do quy tắc phân vị, khác Top K cố định. Dashboard không chứng minh can thiệp làm giảm tái nhập viện.
 
 Sau khi bạn gửi URL deploy, trợ lý cần nhắc lại danh sách ảnh này và cùng kiểm tra các output trước khi viết phần báo cáo. Nếu thầy chưa truy cập được, bước bàn giao chưa hoàn thành.
+
+## Bổ sung cho giao diện phân tích 0.2.0
+
+- Hinh_4_10_Dashboard_phan_tich.png: Tổng quan với thanh lọc, 4 KPI, donut và histogram trong cùng khung hình.
+- Hinh_4_11_Yeu_to_pho_bien.png: biểu đồ tần suất yếu tố; chú thích rõ đây là số lượt xuất hiện, không phải độ lớn SHAP.
+- Hinh_4_12_Ho_so_benh_nhan.png: tỷ lệ nối thành công và biểu đồ tuổi/giới tính từ wide_table. Chỉ chụp khi dữ liệu thật đã nối thành công; không dùng ảnh mô phỏng kiểm thử thay kết quả.
+- Hinh_4_13_Lich_su_nhap_vien.png: số lần nhập viện trước và thời gian nằm viện; chụp cả lựa chọn Số lượt/Tỷ trọng nguy cơ.
+- Hinh_4_14_So_sanh_Precision_Recall_Lift.png: Top 10%, 4 KPI và 3 biểu đồ ngang trên trang hiệu quả.
+
+Các ảnh có nhãn MÔ PHỎNG KIỂM THỬ chỉ phục vụ duyệt giao diện, không đưa vào phần kết quả thực nghiệm. Sau khi Streamlit cập nhật, dùng URL deploy đã cung cấp để chụp output thực.

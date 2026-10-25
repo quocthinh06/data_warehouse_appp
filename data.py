@@ -62,9 +62,13 @@ def batch_control(fields):
 
 
 def patient_filters():
-    levels = st.multiselect("Mức nguy cơ", RISK_LEVELS, default=["Cao"])
-    minimum = st.slider("Điểm nguy cơ tối thiểu", 0.0, 1.0, 0.0, 0.01)
-    patient = st.text_input("Mã bệnh nhân (khớp chính xác)").strip()
+    a, b, c = st.columns([1.2, 1.1, 1.2])
+    with a:
+        levels = st.multiselect("Mức nguy cơ", RISK_LEVELS, default=["Cao"])
+    with b:
+        minimum = st.slider("Điểm nguy cơ tối thiểu", 0.0, 1.0, 0.0, 0.01)
+    with c:
+        patient = st.text_input("Mã bệnh nhân (khớp chính xác)").strip()
     if patient and (not patient.isascii() or not patient.isdigit()):
         st.warning("Mã bệnh nhân chỉ gồm chữ số.")
         st.stop()

@@ -99,3 +99,15 @@ XGBoost (đề xuất), Top 10%: K=1.430, Precision@K=17,27%, Recall@K=19,62%, L
 ## Triển khai và báo cáo
 
 Xem [DEPLOYMENT.md](DEPLOYMENT.md) cho các bước thao tác tài khoản và [REPORT_SCREENSHOTS.md](REPORT_SCREENSHOTS.md) cho danh sách ảnh cần chụp sau khi app chạy trên Cloud.
+
+## Dashboard phân tích 0.2.0
+
+Theo yêu cầu người dùng: giao diện sáng kiểu Power BI/Tableau, navy–teal, giữ 4 trang. Tổng quan có dải KPI, donut nhóm nguy cơ, histogram (bin 0,05), tần suất yếu tố trong top_factors. Bộ lọc mức nguy cơ/điểm tối thiểu áp dụng đồng thời cho các biểu đồ Tổng quan và phân tích hồ sơ; bộ lọc danh sách bệnh nhân nằm riêng trên trang danh sách và giải thích.
+
+Nếu đọc được gold.wide_table cùng vùng, ứng dụng tự phát hiện các cột age, gender, number_inpatient, time_in_hospital. Nối theo cả patient_nbr và encounter_id, gom wide_table theo cặp khóa trước khi nối, chỉ dùng nhóm có đúng 1 dòng nguồn để phân tích hồ sơ. Báo tỷ lệ nối duy nhất/không khớp/khóa trùng để không che mất coverage. Nếu thiếu bảng, quyền hoặc schema, phần này có thông báo và các biểu đồ dự báo vẫn hoạt động. Chỉ dùng các cột nằm trong whitelist, truy vấn có tham số, giới hạn 2 GB. Không cần ghi bảng hoặc huấn luyện lại mô hình.
+
+Muốn xem hồ sơ: service account đang dùng trên Streamlit cần BigQuery Data Viewer trên wide_table (quyền ở dataset gold đã bao gồm quyền này). Không thêm hoặc thay đổi Secrets chỉ vì đổi giao diện. Bật/tắt phân tích hồ sơ để tránh query phần tùy chọn khi không cần. Mỗi lần đổi bộ lọc đều có thể chạy query mới; không cache dữ liệu bệnh nhân giữa các phiên.
+
+Biểu đồ hồ sơ biểu diễn số lượt hoặc tỷ trọng nhóm nguy cơ dự báo, không phải tỷ lệ tái nhập viện thực tế. Tần suất yếu tố không phải trị tuyệt đối SHAP. Không hiển thị biểu đồ xu hướng thời gian vì prediction_date là ngày chạy mô hình, không phải thời điểm nhập viện.
+
+ui.py/assets/theme.css cung cấp giao diện; charts.py dùng Altair đã có trong môi trường Streamlit và được khai báo trực tiếp trong requirements. analytics.py chứa SQL tổng hợp và nối hồ sơ. Không có chế độ dữ liệu mô phỏng trong bản deploy. Xem DESIGN.md và REDESIGN_BRIEF.md.

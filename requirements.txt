@@ -2,3 +2,4 @@ streamlit==1.66.1
 pandas==2.3.3
 google-cloud-bigquery==3.46.2
 google-auth==2.62.0
+altair==6.3.0

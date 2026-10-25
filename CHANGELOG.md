@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 — 2026-10-25
+
+- Thiết kế lại giao diện sáng navy–teal, sidebar, bộ lọc và bảng đọc số liệu.
+- Thêm donut, histogram điểm nguy cơ, tần suất yếu tố và ba biểu đồ Precision/Recall/Lift.
+- Thêm phân tích tuổi, giới tính, số lần nhập viện và số ngày nằm viện khi gold.wide_table có dữ liệu và quyền truy cập.
+- Nối theo hai khóa và chỉ dùng bản ghi nguồn duy nhất, hiển thị coverage; thiếu dữ liệu tùy chọn không chặn dashboard chính.
+- Bổ sung kiểm thử query/biểu đồ và hướng dẫn ảnh báo cáo.
+
 ## 0.1.0 — 2026-10-25
 
 - Dashboard Streamlit bốn trang đọc gold.readmission_prediction.
