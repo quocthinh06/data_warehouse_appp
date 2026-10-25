@@ -49,8 +49,8 @@ def profile_sql(fields, wide_fields, latest, levels, minimum):
     expressions = {
         "age": "CASE WHEN age IS NULL OR TRIM(age) IN ('', '?', 'None') THEN 'Chưa rõ' ELSE age END",
         "gender": "CASE gender WHEN 'Male' THEN 'Nam' WHEN 'Female' THEN 'Nữ' ELSE 'Chưa rõ' END",
-        "number_inpatient": "CASE WHEN number_inpatient IS NULL OR number_inpatient < 0 OR MOD(number_inpatient, 1) != 0 THEN 'Chưa rõ' WHEN number_inpatient = 0 THEN '0 lần' WHEN number_inpatient = 1 THEN '1 lần' WHEN number_inpatient = 2 THEN '2 lần' ELSE '3+ lần' END",
-        "time_in_hospital": "CASE WHEN time_in_hospital IS NULL OR time_in_hospital <= 0 OR MOD(time_in_hospital, 1) != 0 THEN 'Chưa rõ' WHEN time_in_hospital <= 3 THEN '01–03 ngày' WHEN time_in_hospital <= 7 THEN '04–07 ngày' ELSE '08+ ngày' END",
+        "number_inpatient": "CASE WHEN number_inpatient IS NULL OR number_inpatient < 0 OR number_inpatient != FLOOR(number_inpatient) THEN 'Chưa rõ' WHEN number_inpatient = 0 THEN '0 lần' WHEN number_inpatient = 1 THEN '1 lần' WHEN number_inpatient = 2 THEN '2 lần' ELSE '3+ lần' END",
+        "time_in_hospital": "CASE WHEN time_in_hospital IS NULL OR time_in_hospital <= 0 OR time_in_hospital != FLOOR(time_in_hospital) THEN 'Chưa rõ' WHEN time_in_hospital <= 3 THEN '01–03 ngày' WHEN time_in_hospital <= 7 THEN '04–07 ngày' ELSE '08+ ngày' END",
     }
     dimensions = ", ".join(f"STRUCT('{name}' AS dimension, {expressions[name]} AS category)" for name in sorted(selected))
     sql = f"""WITH p AS (SELECT patient_nbr, encounter_id, risk_level, risk_score FROM `{data.TABLE}` WHERE {where}),
