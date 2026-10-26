@@ -2,7 +2,7 @@ from pathlib import Path
 import streamlit as st
 from ui import theme
 
-st.set_page_config(page_title="Readmission AI · Diabetes Analytics", page_icon=":material/monitoring:", layout="wide")
+st.set_page_config(page_title="Diabetes Insight · Phân tích nguy cơ tái nhập viện", page_icon=":material/monitoring:", layout="wide")
 theme()
 st.logo(str(Path(__file__).parent / "assets/logo.svg"), size="large", icon_image=str(Path(__file__).parent / "assets/icon.svg"))
 page = st.navigation([
@@ -12,11 +12,4 @@ page = st.navigation([
     st.Page("pages/performance.py", title="Hiệu quả mô hình", icon=":material/analytics:"),
     st.Page("pages/assistant.py", title="Trợ lý AI", icon=":material/chat:"),
 ])
-st.sidebar.divider()
-st.sidebar.markdown("### Theo dõi sau xuất viện")
-st.sidebar.caption("Phân tích nguy cơ tái nhập viện dưới 30 ngày từ tầng Gold của kho dữ liệu.")
-st.sidebar.caption("Giai đoạn 4 · Streamlit + BigQuery")
-st.sidebar.caption("Phiên bản " + (Path(__file__).parent / "VERSION").read_text(encoding="utf-8").strip())
-st.sidebar.divider()
-st.sidebar.caption("Hỗ trợ ưu tiên theo dõi. Hành động đề xuất cần được nhân viên chuyên môn rà soát.")
 page.run()

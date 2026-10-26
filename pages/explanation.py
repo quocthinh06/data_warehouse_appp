@@ -4,6 +4,7 @@ from metrics import split_items
 from ui import heading, kpis, feature_label, note
 
 heading("Giải thích AI", "Hiểu lý do một lượt khám được ưu tiên và xem hành động theo dõi do pipeline đề xuất.")
+st.page_link("pages/priority.py", label="Quay lại danh sách bệnh nhân", icon=":material/arrow_back:")
 bq, fields, location = connect()
 latest = batch_control(fields)
 with st.container(key="patient_filters"):

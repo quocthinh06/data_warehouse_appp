@@ -53,3 +53,7 @@ Các ảnh có nhãn MÔ PHỎNG KIỂM THỬ chỉ phục vụ duyệt giao di�
 - Hinh_4_18_Groq_gioi_han.png (tùy chọn): câu hỏi yêu cầu chỉ số không có (ví dụ ma trận nhầm lẫn) để minh họa trợ lý nhận thiếu dữ liệu. Không coi một ví dụ là bằng chứng AI luôn chính xác.
 
 Chỉ chụp sau khi API trả lời thật. Phản hồi mock trong kiểm thử không phải output Groq thực tế.
+
+## Bổ sung giao diện 0.3.1
+
+Chụp cùng một biểu đồ hai lần: chọn Biểu đồ, sau đó chọn Dữ liệu, giữ nguyên bộ lọc. Dùng ảnh từ app thật để minh họa khả năng đối chiếu số liệu; không dùng ảnh mô phỏng kiểm thử.

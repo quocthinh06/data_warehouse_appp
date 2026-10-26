@@ -16,3 +16,7 @@
 - Chrome kiểm tra trạng thái chưa cấu hình key và luồng hội thoại giả lập ở desktop/mobile, clear history và không có exception. Bản sao QA tách biệt với key giả và phản hồi ghi nhãn, không đưa lên production.
 - CI được cấu hình chạy Python 3.12 và 3.14 vì log deploy cho thấy Cloud dùng Python 3.14.9.
 - Không có key thật trong môi trường trợ lý; chưa gọi API Groq thật hoặc xác nhận phản hồi trên Cloud. Cần chủ app thêm GROQ_API_KEY và thử một câu hỏi theo GROQ_SETUP.md.
+
+## 0.3.1 — Điều hướng và nhận diện
+
+26 unittest/AppTest đạt; có kiểm tra chuyển biểu đồ → dữ liệu → biểu đồ và giữ Top 10%. Playwright Chrome kiểm tra 7 bộ chuyển trên Tổng quan, 5 trang, chuyển dữ liệu và chiều rộng 390px không tràn ngang. Tổng quan/hồ sơ dùng fixture mô phỏng ngoài dự án. Không xác nhận lại BigQuery/Groq live bằng khóa thật.

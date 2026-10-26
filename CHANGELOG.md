@@ -1,3 +1,9 @@
+# 0.3.1
+
+- Diabetes Insight: tên ứng dụng và trợ lý thống nhất với chủ đề phân tích tái nhập viện.
+- Chuyển Biểu đồ / Dữ liệu trên từng biểu đồ, giữ bộ lọc. Thêm đường quay lại từ bệnh nhân và giải thích.
+- Bỏ khối giới thiệu và phiên bản trong sidebar.
+
 # Changelog
 
 ## 0.3.0 — 2026-10-26

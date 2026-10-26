@@ -48,6 +48,18 @@ class DashboardTests(unittest.TestCase):
         self.assertEqual(list(app.exception), [])
         self.assertEqual(app.dataframe[0].value.iloc[0]["Lượt dự báo"], 1)
 
+    def test_chart_data_roundtrip(self):
+        app = AppTest.from_file(str(ROOT / "pages/performance.py")).run()
+        key = "chart_view_So sánh Precision@K giữa các mô hình"
+        app.segmented_control(key=key).set_value("Dữ liệu").run()
+        self.assertEqual(list(app.exception), [])
+        self.assertEqual(len(app.dataframe[0].value), 3)
+        self.assertIn("Precision@K", app.dataframe[0].value)
+        app.segmented_control(key=key).set_value("Biểu đồ").run()
+        self.assertEqual(list(app.exception), [])
+        self.assertEqual(len(app.dataframe), 2)
+        self.assertEqual(app.selectbox[0].value, "10%")
+
     def test_empty_overview(self):
         summary = pd.Series(dict(total_predictions=0, unique_patients=0, avg_score=None))
         with patch("data.connect", return_value=(None, FIELDS, "US")), patch("analytics.load_overview", return_value=(summary, None, None, None)):

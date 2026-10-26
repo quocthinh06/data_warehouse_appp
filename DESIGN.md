@@ -1,4 +1,4 @@
-# Readmission AI · Diabetes Analytics
+# Diabetes Insight · Phân tích nguy cơ tái nhập viện
 
 Người dùng đã chọn giao diện sáng kiểu Power BI/Tableau, trắng và navy–teal, ưu tiên câu chuyện dữ liệu → nguy cơ → bệnh nhân → hiệu quả AI. Nguồn cảm hứng: https://muz.li/blog/best-dashboard-design-examples-inspirations-for-2026/ . Giữ 4 trang Streamlit; Tổng quan là dashboard chính. Bố cục phục vụ demo trên laptop và chụp báo cáo.
 

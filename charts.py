@@ -13,6 +13,16 @@ def risk_color():
 
 
 def show(chart, description):
+    view = st.segmented_control("Chế độ xem", ["Biểu đồ", "Dữ liệu"], default="Biểu đồ",
+        key="chart_view_" + description, selection_mode="single")
+    if view == "Dữ liệu":
+        labels = {"risk_level": "Nhóm nguy cơ", "prediction_count": "Lượt dự báo",
+            "share": "Tỷ trọng", "avg_score": "Điểm trung bình", "score_start": "Điểm từ",
+            "score_end": "Điểm đến", "factor": "Đặc trưng gốc", "label": "Yếu tố",
+            "category": "Nhóm", "dimension": "Chiều phân tích"}
+        st.dataframe(chart.data.rename(columns=labels), hide_index=True, width="stretch")
+        st.caption("Chọn Biểu đồ để quay lại. Dữ liệu giữ nguyên bộ lọc đang xem.")
+        return
     chart = chart.configure(background="#FFFFFF").configure_view(stroke=None).configure_axis(
         labelColor="#526579", titleColor="#526579", gridColor="#EDF1F5",
         domain=False, ticks=False, labelFontSize=11, titleFontSize=11,

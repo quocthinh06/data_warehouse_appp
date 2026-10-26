@@ -3,6 +3,7 @@ from data import connect, batch_control, patient_rows
 from ui import heading, patient_columns, note
 
 heading("Bệnh nhân ưu tiên", "Thu hẹp danh sách, xác định lượt khám cần theo dõi và chuyển sang giải thích dự báo.")
+st.page_link("pages/overview.py", label="Quay lại tổng quan", icon=":material/arrow_back:")
 bq, fields, location = connect()
 latest = batch_control(fields)
 with st.container(key="patient_filters"):

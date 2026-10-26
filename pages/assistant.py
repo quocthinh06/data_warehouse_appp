@@ -7,7 +7,7 @@ from metrics import read_metrics
 from groq_client import MODEL, ask_groq, metrics_context
 from ui import heading, note
 
-heading("Trợ lý AI · Groq", "Hỏi đáp số liệu tổng hợp, đọc biểu đồ và so sánh hiệu quả mô hình bằng tiếng Việt.")
+heading("Trợ lý Diabetes Insight", "Hỏi đáp số liệu tổng hợp, đọc biểu đồ và so sánh hiệu quả mô hình bằng tiếng Việt.")
 try:
     api_key = st.secrets.get("GROQ_API_KEY", "")
 except FileNotFoundError:
