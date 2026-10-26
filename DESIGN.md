@@ -18,3 +18,7 @@ Logo SVG riêng trước menu; icon Material cùng hệ. Bộ lọc ở thanh tr
 ## Dữ liệu và trạng thái
 
 Không đặt nội dung kỹ thuật dài ở đầu dashboard. Lỗi, rỗng, thiếu bảng tùy chọn có hướng dẫn phục hồi. SQL lấy số liệu tổng hợp; không đưa identifier vào biểu đồ. Chỉ kết quả nối duy nhất trên cặp patient_nbr/encounter_id mới được dùng cho hồ sơ; báo riêng không khớp và khóa trùng. Không dựng dữ liệu thay thế trong app khi thiếu quyền.
+
+## Trợ lý AI (0.3.0)
+
+Trang thứ năm kế thừa hệ màu và typography hiện có, dùng chat native Streamlit. Luôn thấy nguồn và phạm vi, nút về Tổng quan để nạp lại, nút xóa hội thoại; key thiếu thì khóa input và chỉ dẫn cho chủ app. Thông báo dữ liệu được gửi Groq đặt trước input. Không tự tạo câu trả lời khi API chưa được cấu hình.

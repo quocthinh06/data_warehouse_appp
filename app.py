@@ -10,6 +10,7 @@ page = st.navigation([
     st.Page("pages/priority.py", title="Bệnh nhân ưu tiên", icon=":material/format_list_bulleted:"),
     st.Page("pages/explanation.py", title="Giải thích AI", icon=":material/psychology:"),
     st.Page("pages/performance.py", title="Hiệu quả mô hình", icon=":material/analytics:"),
+    st.Page("pages/assistant.py", title="Trợ lý AI", icon=":material/chat:"),
 ])
 st.sidebar.divider()
 st.sidebar.markdown("### Theo dõi sau xuất viện")

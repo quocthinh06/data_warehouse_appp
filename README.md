@@ -1,6 +1,6 @@
 # Streamlit Dashboard — Giai đoạn 4
 
-Dashboard tiếng Việt, chỉ đọc từ `diabetes-pipeline-511509.gold.readmission_prediction`. Không dùng Groq, không huấn luyện lại mô hình, không ghi BigQuery. Python 3.12 được dùng để kiểm thử.
+Dashboard tiếng Việt, chỉ đọc từ `diabetes-pipeline-511509.gold.readmission_prediction`. Có Trợ lý AI Groq cho số liệu tổng hợp từ bản 0.3.0; không huấn luyện lại mô hình, không ghi BigQuery. Python 3.12 được dùng để kiểm thử.
 
 ## Trạng thái nguồn
 
@@ -111,3 +111,7 @@ Muốn xem hồ sơ: service account đang dùng trên Streamlit cần BigQuery 
 Biểu đồ hồ sơ biểu diễn số lượt hoặc tỷ trọng nhóm nguy cơ dự báo, không phải tỷ lệ tái nhập viện thực tế. Tần suất yếu tố không phải trị tuyệt đối SHAP. Không hiển thị biểu đồ xu hướng thời gian vì prediction_date là ngày chạy mô hình, không phải thời điểm nhập viện.
 
 ui.py/assets/theme.css cung cấp giao diện; charts.py dùng Altair đã có trong môi trường Streamlit và được khai báo trực tiếp trong requirements. analytics.py chứa SQL tổng hợp và nối hồ sơ. Không có chế độ dữ liệu mô phỏng trong bản deploy. Xem DESIGN.md và REDESIGN_BRIEF.md.
+
+## Trợ lý AI Groq 0.3.0
+
+Đã bổ sung theo yêu cầu mới của người dùng sau khi xác nhận hồ sơ hiển thị. Xem [GROQ_SETUP.md](GROQ_SETUP.md) để thêm GROQ_API_KEY trực tiếp vào Streamlit Secrets. Không cần thay credential BigQuery. Trang Trợ lý AI không gọi API khi mới mở và không gửi bản ghi bệnh nhân; dữ liệu gửi là ảnh chụp tổng hợp từ Tổng quan, CSV gốc và câu hỏi người dùng. Chưa xác minh API Groq thật trước khi chủ app cấu hình key.

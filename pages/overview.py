@@ -4,8 +4,10 @@ from data import connect, batch_control, RISK_LEVELS
 from analytics import load_overview, load_profiles
 from ui import heading, kpis, note, feature_label
 import charts
+from groq_client import overview_context, profiles_context
 
 heading("Tổng quan nguy cơ tái nhập viện", "Từ dữ liệu kho Gold đến nhóm bệnh nhân cần ưu tiên theo dõi sau xuất viện.")
+st.session_state.pop("dashboard_ai_snapshot", None)
 bq, fields, location = connect()
 with st.container(key="overview_filters"):
     a, b, c = st.columns([2, 1.3, 1.5], vertical_alignment="bottom")
@@ -23,6 +25,7 @@ total = int(summary.total_predictions)
 if not total:
     st.info("Không có dự báo phù hợp. Hãy mở rộng bộ lọc.")
     st.stop()
+st.session_state["dashboard_ai_snapshot"] = overview_context(summary, distribution, histogram, factor_rows, levels, minimum, latest)
 distribution = distribution.sort_values("risk_level", key=lambda s: s.map({risk: i for i, risk in enumerate(RISK_LEVELS)}))
 distribution["share"] = distribution.prediction_count / total
 high = int(distribution.loc[distribution.risk_level == "Cao", "prediction_count"].sum())
@@ -68,6 +71,7 @@ if st.toggle("Hiển thị phân tích hồ sơ", value=True):
     if profiles is None:
         st.info(reason)
     else:
+        st.session_state["dashboard_ai_snapshot"]["profiles"] = profiles_context(profiles)
         coverage = profiles[profiles.dimension == "coverage"].set_index("category").prediction_count
         matched = int(coverage.get("matched", 0))
         st.caption(f"Nối duy nhất: {matched:,}/{total:,} lượt ({matched/total:.1%}) · Không khớp: {int(coverage.get('unmatched', 0)):,} · Khóa trùng, loại khỏi hồ sơ: {int(coverage.get('ambiguous', 0)):,}.")

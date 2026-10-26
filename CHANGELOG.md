@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0 — 2026-10-26
+
+- Thêm Trợ lý AI dùng Groq để hỏi đáp số liệu tổng hợp, diễn giải biểu đồ và so sánh mô hình.
+- Ngữ cảnh whitelist từ Tổng quan và CSV gốc, không lấy mã bệnh nhân/lượt khám; có nguồn và phạm vi bộ lọc.
+- Khóa chỉ ở Secrets/env; xử lý thiếu key, lỗi mạng, giới hạn lượt gọi và phản hồi sai định dạng. Không gọi API tự động hoặc chạy SQL do AI tạo.
+- Người dùng đã xác nhận phần hồ sơ hiển thị sau khi khởi động lại app.
+
 ## 0.2.0 — 2026-10-25
 
 - Thiết kế lại giao diện sáng navy–teal, sidebar, bộ lọc và bảng đọc số liệu.

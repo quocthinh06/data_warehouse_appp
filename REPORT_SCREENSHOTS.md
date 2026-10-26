@@ -44,3 +44,12 @@ Sau khi bạn gửi URL deploy, trợ lý cần nhắc lại danh sách ảnh n�
 - Hinh_4_14_So_sanh_Precision_Recall_Lift.png: Top 10%, 4 KPI và 3 biểu đồ ngang trên trang hiệu quả.
 
 Các ảnh có nhãn MÔ PHỎNG KIỂM THỬ chỉ phục vụ duyệt giao diện, không đưa vào phần kết quả thực nghiệm. Sau khi Streamlit cập nhật, dùng URL deploy đã cung cấp để chụp output thực.
+
+## Trợ lý AI Groq 0.3.0
+
+- Hinh_4_15_Groq_nguon_du_lieu.png: mở Trợ lý AI, bung Nguồn và phạm vi dữ liệu gửi cho AI; chụp số tổng hợp và bộ lọc, không chụp Secrets.
+- Hinh_4_16_Groq_so_sanh_mo_hinh.png: câu hỏi so sánh Top 10% và phản hồi Groq thật; kiểm tra K/Precision/Recall/Lift khớp CSV trước khi đưa vào báo cáo.
+- Hinh_4_17_Groq_tom_tat_dashboard.png: câu hỏi tóm tắt phạm vi đang xem và phản hồi có dẫn nguồn BigQuery; chụp cả nhãn phạm vi để tránh dùng nhầm số liệu.
+- Hinh_4_18_Groq_gioi_han.png (tùy chọn): câu hỏi yêu cầu chỉ số không có (ví dụ ma trận nhầm lẫn) để minh họa trợ lý nhận thiếu dữ liệu. Không coi một ví dụ là bằng chứng AI luôn chính xác.
+
+Chỉ chụp sau khi API trả lời thật. Phản hồi mock trong kiểm thử không phải output Groq thực tế.
