@@ -108,6 +108,16 @@ class DashboardTests(unittest.TestCase):
         self.assertEqual(list(app.exception), [])
         self.assertEqual(set(app.dataframe[0].value["K"]), {715})
 
+    def test_final_evaluation_matches_notebook(self):
+        frame = read_metrics(ROOT / "data/evaluation_metrics.csv")
+        top = frame[frame["Top %"] == "10%"].set_index("Mô hình")
+        self.assertAlmostEqual(top.loc["XGBoost (đề xuất)", "Precision@K"], 243 / 1430)
+        self.assertAlmostEqual(top.loc["Logistic Regression", "Recall@K"], 241 / 1259)
+        app = AppTest.from_file(str(ROOT / "pages/performance.py")).run()
+        self.assertEqual(list(app.exception), [])
+        self.assertIn("45.771", " ".join(item.value for item in app.markdown))
+        self.assertAlmostEqual(app.table[0].value.iloc[0]["ROC-AUC"], 0.6229)
+
     def test_numeric_topk_labels(self):
         frame = read_metrics(ROOT / "data/evaluation_metrics.csv")
         frame["Top %"] = frame["Top %"].str.rstrip("%").astype(int)

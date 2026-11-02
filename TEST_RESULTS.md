@@ -20,3 +20,10 @@
 ## 0.3.1 — Điều hướng và nhận diện
 
 26 unittest/AppTest đạt; có kiểm tra chuyển biểu đồ → dữ liệu → biểu đồ và giữ Top 10%. Playwright Chrome kiểm tra 7 bộ chuyển trên Tổng quan, 5 trang, chuyển dữ liệu và chiều rộng 390px không tràn ngang. Tổng quan/hồ sơ dùng fixture mô phỏng ngoài dự án. Không xác nhận lại BigQuery/Groq live bằng khóa thật.
+
+## 0.3.2 — Đồng bộ kết quả cuối 02/11/2026
+
+- 27 unittest/AppTest đạt. Kiểm thử mới thất bại trước cập nhật với Precision XGB cũ và tỷ lệ chia tập cũ, đạt sau cập nhật.
+- Kiểm tra UI hiệu quả: CSV Top10 XGB 243/1430, LR241/1430, ROC-AUC XGB0,6229 và train45771; yêu cầu Groq giả lập nhận CSV mới và tỷ lệ64/16/20.
+- Chỉ đọc notebook trong ZIP và thống kê CSV dự báo trong bộ nhớ; không chạy notebook, không nạp joblib, không ghi BQ hoặc gọi Groq thật.
+- Output notebook xác nhận đã ghi 14304 dòng lên BigQuery; chưa xác minh trực tiếp bảng live sau cập nhật.

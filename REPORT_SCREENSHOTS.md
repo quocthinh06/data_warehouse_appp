@@ -29,9 +29,9 @@ WHERE prediction_date = (
 );
 ```
 
-Nếu nguồn chưa đổi từ ngày 25/10/2026, có thể đối chiếu 14.304 lượt/bệnh nhân, Cao=1.431, Trung bình=2.860, Thấp=10.013, trung bình 0,4732. Nếu đợt mới thay thế bảng, ghi ngày mới và dùng số thật; không sửa app để khớp số cũ.
+Mốc đối chiếu từ CSV dự báo trong gói Project cuối: ngày 02/11/2026, 14.304 lượt/bệnh nhân, Cao=1.431, Trung bình=2.860, Thấp=10.013, trung bình 0,4541, max=0,9158. Notebook có output xác nhận ghi BigQuery; cần kiểm tra app thật đang hiện đúng đợt này. Nếu đã thay bằng đợt khác, dùng nguồn thực tế, không sửa app để khớp số cũ.
 
-Diễn giải đúng: XGBoost Top 10% có Precision@K≈17,27%, Recall@K≈19,62%, Lift≈1,96. Nghĩa là ưu tiên 1.430 người bắt được khoảng 19,62% ca dương của tập test. Không gọi 17,27% là accuracy. Cao=1.431 do quy tắc phân vị, khác Top K cố định. Dashboard không chứng minh can thiệp làm giảm tái nhập viện.
+Diễn giải đúng: XGBoost Top 10% có Precision@K≈16,99%, Recall@K≈19,30%, Lift≈1,93. Nghĩa là ưu tiên 1.430 người bắt được khoảng 19,30% ca dương của tập test. Không gọi 16,99% là accuracy. Cao=1.431 do quy tắc phân vị, khác Top K cố định. Dashboard không chứng minh can thiệp làm giảm tái nhập viện.
 
 Sau khi bạn gửi URL deploy, trợ lý cần nhắc lại danh sách ảnh này và cùng kiểm tra các output trước khi viết phần báo cáo. Nếu thầy chưa truy cập được, bước bàn giao chưa hoàn thành.
 
@@ -57,3 +57,7 @@ Chỉ chụp sau khi API trả lời thật. Phản hồi mock trong kiểm th�
 ## Bổ sung giao diện 0.3.1
 
 Chụp cùng một biểu đồ hai lần: chọn Biểu đồ, sau đó chọn Dữ liệu, giữ nguyên bộ lọc. Dùng ảnh từ app thật để minh họa khả năng đối chiếu số liệu; không dùng ảnh mô phỏng kiểm thử.
+
+## Chụp lại sau đồng bộ 0.3.2
+
+Ảnh cũ ngày 25/10 có điểm trung bình 0,4732 và Groq nêu 247 ca / Precision 17,27% thuộc bộ cũ, không dùng làm bằng chứng bộ cuối. Mở Tổng quan để nạp snapshot mới, rồi hỏi lại Groq. Bộ cuối Top 10%: XGB 243 ca, LR 241 ca; chênh 2 ca. Chụp lại Tổng quan, hồ sơ, bệnh nhân/giải thích, hiệu quả và hội thoại.

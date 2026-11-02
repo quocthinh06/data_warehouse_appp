@@ -51,8 +51,9 @@ note("Đọc đúng hiệu quả mô hình", "Precision@K là tỷ lệ ca dươ
 
 if upload is None:
     st.subheader("Bối cảnh đánh giá từ notebook Giai đoạn 3")
-    st.write("Train: 48.631 · Validation: 8.583 · Test: 14.304 bệnh nhân, trong đó 1.259 ca tái nhập viện dưới 30 ngày (8,80%).")
+    st.caption("Bộ đánh giá ngày 02/11/2026 · Train/validation/test: 64% / 16% / 20% · XGBoost 400 cây, không dừng sớm.")
+    st.write("Train: 45.771 · Validation: 11.443 · Test: 14.304 bệnh nhân, trong đó 1.259 ca tái nhập viện dưới 30 ngày (8,80%).")
     st.table(pd.DataFrame({"Mô hình": ["XGBoost", "Logistic Regression"],
-        "ROC-AUC": [0.6294, 0.6178], "Average precision": [0.1461, 0.1414]}))
-    st.caption("Các giá trị trên trích từ output cell 11 của notebook đã lưu, không tính lại trong dashboard. Notebook gọi average_precision_score là PR-AUC; ở đây giữ đúng tên average precision.")
+        "ROC-AUC": [0.6229, 0.6177], "Average precision": [0.1456, 0.1412]}))
+    st.caption("Các giá trị trên trích từ output cell 13–14 của notebook trong gói Project ngày 02/11/2026, không tính lại trong dashboard. Notebook gọi average_precision_score là PR-AUC; ở đây giữ đúng tên average precision.")
     st.info("Top 10% dùng K = round(14.304 × 10%) = 1.430. Nhóm Cao trong pipeline dùng điểm ≥ phân vị 90%, có 1.431 người theo kết quả BigQuery đã đối chiếu. Hai cách chọn không buộc cho cùng số lượng.")

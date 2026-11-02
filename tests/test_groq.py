@@ -79,6 +79,10 @@ class GroqTests(unittest.TestCase):
             app.chat_input[0].set_value("So sánh mô hình Top 10%").run()
             self.assertEqual(list(app.exception),[])
             self.assertEqual(call.call_count,1)
+            context = call.call_args.args[2]
+            self.assertIn("64% / 16% / 20%", context["methodology"]["train_validation_test"])
+            row = next(r for r in context["evaluation"]["rows"] if r["model"] == "XGBoost (đề xuất)" and r["top_percent"] == "10%")
+            self.assertAlmostEqual(row["precision_at_k"], 243 / 1430)
             app.chat_input[0].set_value("Hỏi lại ngay").run()
             self.assertEqual(call.call_count,1)
             self.assertTrue(app.warning)

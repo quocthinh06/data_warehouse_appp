@@ -15,17 +15,20 @@ except FileNotFoundError:
 api_key = api_key or os.environ.get("GROQ_API_KEY", "")
 context = {"evaluation": metrics_context(read_metrics(Path(__file__).resolve().parents[1] / "data/evaluation_metrics.csv")),
     "methodology": {"positive_label": "readmitted = <30", "test_patients": 14304,
-        "test_positive_cases": 1259, "train_validation_test": "68% / 12% / 20%, phân tầng, random_state=42",
+        "test_positive_cases": 1259, "train_patients": 45771, "validation_patients": 11443,
+        "evaluation_reference_date": "2026-11-02", "xgboost_trees": 400, "early_stopping": False,
+        "roc_auc": {"XGBoost": 0.6229, "Logistic Regression": 0.6177},
+        "average_precision": {"XGBoost": 0.1456, "Logistic Regression": 0.1412}, "train_validation_test": "64% / 16% / 20%, phân tầng, random_state=42",
         "risk_groups": "Cao >= phân vị 90%; Trung bình >= phân vị 70% và <90%; Thấp còn lại",
         "top_k": "K = round(n*pct), khác số người thuộc nhóm Cao theo phân vị",
-        "source": "Huan_luyen_AI_Diabetes.ipynb, ghi chú trong SOURCE_NOTES.md"}}
+        "source": "Project/Huan_luyen_AI_Diabetes.ipynb, cells 11, 13–14; ghi chú trong SOURCE_NOTES.md"}}
 snapshot = st.session_state.get("dashboard_ai_snapshot")
 if snapshot:
     context["overview"] = snapshot
     st.caption("Nguồn BigQuery: ảnh chụp số liệu từ lần xem Tổng quan gần nhất trong phiên này; dùng đúng bộ lọc được liệt kê bên dưới.")
 else:
     st.info("Chưa nạp số liệu Tổng quan trong phiên này. Trợ lý vẫn có thể giải thích chỉ số và CSV đánh giá; muốn hỏi dữ liệu BigQuery hiện tại, mở Tổng quan trước.")
-st.caption("Đánh giá mô hình dùng CSV gốc đi kèm app, không tự lấy tệp tải riêng ở trang Hiệu quả mô hình.")
+st.caption("Bộ đánh giá ngày 02/11/2026. Đánh giá mô hình dùng CSV gốc đi kèm app, không tự lấy tệp tải riêng ở trang Hiệu quả mô hình.")
 st.page_link("pages/overview.py", label="Mở Tổng quan để nạp/cập nhật số liệu", icon=":material/refresh:")
 with st.expander("Nguồn và phạm vi dữ liệu gửi cho AI"):
     st.json(context)

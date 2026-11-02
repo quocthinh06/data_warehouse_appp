@@ -16,10 +16,10 @@ Mô hình hiện dùng: openai/gpt-oss-120b qua https://api.groq.com/openai/v1/c
 GROQ_API_KEY = "DÁN_KEY_THẬT_TRỰC_TIẾP_TẠI_STREAMLIT"
 ```
 
-4. Nhấn Save, đợi app cập nhật; nếu chưa có trang Trợ lý AI hoặc sidebar chưa ghi 0.3.0, dùng Reboot app. Không xóa app hoặc credential BigQuery.
+4. Nhấn Save, đợi app cập nhật; nếu chưa thấy nhãn bộ đánh giá 02/11/2026 trên trang Trợ lý AI, dùng Reboot app. Không xóa app hoặc credential BigQuery.
 5. Mở Tổng quan, chọn bộ lọc và đợi dữ liệu/biểu đồ hoàn tất. Mở Trợ lý AI; xem expander Nguồn và phạm vi dữ liệu gửi cho AI để kiểm tra ảnh chụp ngữ cảnh.
 6. Gửi: “Ở Top 10%, so sánh XGBoost với Logistic Regression và giải thích Precision@K, Recall@K, Lift.”
-7. Đối chiếu với CSV: XGBoost K=1.430, Precision≈17,27%, Recall≈19,62%, Lift≈1,96. Đây là chỉ số tập test gốc, không phải chỉ số tính lại theo bộ lọc Tổng quan.
+7. Đối chiếu với CSV: XGBoost K=1.430, Precision≈16,99%, Recall≈19,30%, Lift≈1,93. Đây là chỉ số tập test gốc, không phải chỉ số tính lại theo bộ lọc Tổng quan.
 8. Gửi thêm câu hỏi: “Tóm tắt nhóm nguy cơ trong phạm vi đang xem và nêu giới hạn.” Kiểm tra số trích dẫn khớp ngữ cảnh nguồn.
 9. Báo “Groq đã trả lời” hoặc gửi thông báo lỗi đã che thông tin nhạy cảm. Không chụp Secrets hoặc API key.
 

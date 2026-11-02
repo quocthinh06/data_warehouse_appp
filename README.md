@@ -10,7 +10,7 @@ Dashboard tiếng Việt, chỉ đọc từ `diabetes-pipeline-511509.gold.readm
 
 Chép CSV thực vào `data/evaluation_metrics.csv` hoặc dùng nút tải CSV ở trang Hiệu quả mô hình. CSV UTF-8, dấu phẩy, có tiêu đề; nhận cả bảng rộng và bảng dài, hiển thị bảng gốc và biểu đồ so sánh cho schema Top K đã xác nhận. Không suy diễn accuracy hoặc dựng đường ROC từ chỉ số tổng hợp. AUC chỉ hiển thị theo output notebook nguồn. Tệp tải lên chỉ dùng trong phiên; không tự lưu xuống ổ đĩa. Giới hạn 5 MB, 10.000 dòng và 100 cột.
 
-Các số 14.304 bệnh nhân, 1.431 cao, 2.860 trung bình, 10.013 thấp và điểm trung bình 0,4732 ngày 25/10/2026 là thông tin đối chiếu từ đoạn chat, **không hardcode làm kết quả dashboard**. Nếu bảng đã có đợt mới, số liệu có thể khác. Phân bố tính theo lượt dự báo; bệnh nhân duy nhất được đếm riêng. Không đặt lại ngưỡng từ các giá trị min/max vì các khoảng có thể trùng sau làm tròn.
+Các số 14.304 bệnh nhân, 1.431 cao, 2.860 trung bình, 10.013 thấp và điểm trung bình 0,4541 ngày 02/11/2026 là thông tin đối chiếu từ CSV dự báo trong gói Project cuối, **không hardcode làm kết quả dashboard**. Nếu bảng đã có đợt mới, số liệu có thể khác. Phân bố tính theo lượt dự báo; bệnh nhân duy nhất được đếm riêng. Không đặt lại ngưỡng từ các giá trị min/max vì các khoảng có thể trùng sau làm tròn.
 
 ## Cấu trúc
 
@@ -94,7 +94,7 @@ Bản ZIP đi kèm chứa mã nguồn, ví dụ cấu hình và hướng dẫn, 
 
 ## Đối chiếu CSV đã nhận
 
-XGBoost (đề xuất), Top 10%: K=1.430, Precision@K=17,27%, Recall@K=19,62%, Lift=1,9624. K=1.430 trong CSV khác 1.431 bản ghi mức Cao ở BigQuery đã báo trong chat. Dashboard giữ nguyên hai nguồn; chưa thể coi chúng là cùng tập ưu tiên do notebook dùng round(n*pct) cho Top K và quantile cho phân tầng nguy cơ.
+XGBoost (đề xuất), Top 10%: K=1.430, Precision@K=16,99%, Recall@K=19,30%, Lift=1,9306. K=1.430 trong CSV khác 1.431 bản ghi mức Cao ở BigQuery đã báo trong chat. Dashboard giữ nguyên hai nguồn; chưa thể coi chúng là cùng tập ưu tiên do notebook dùng round(n*pct) cho Top K và quantile cho phân tầng nguy cơ.
 
 ## Triển khai và báo cáo
 
@@ -114,4 +114,4 @@ ui.py/assets/theme.css cung cấp giao diện; charts.py dùng Altair đã có t
 
 ## Trợ lý AI Groq 0.3.0
 
-Đã bổ sung theo yêu cầu mới của người dùng sau khi xác nhận hồ sơ hiển thị. Xem [GROQ_SETUP.md](GROQ_SETUP.md) để thêm GROQ_API_KEY trực tiếp vào Streamlit Secrets. Không cần thay credential BigQuery. Trang Trợ lý AI không gọi API khi mới mở và không gửi bản ghi bệnh nhân; dữ liệu gửi là ảnh chụp tổng hợp từ Tổng quan, CSV gốc và câu hỏi người dùng. Chưa xác minh API Groq thật trước khi chủ app cấu hình key.
+Đã bổ sung theo yêu cầu mới của người dùng sau khi xác nhận hồ sơ hiển thị. Xem [GROQ_SETUP.md](GROQ_SETUP.md) để thêm GROQ_API_KEY trực tiếp vào Streamlit Secrets. Không cần thay credential BigQuery. Trang Trợ lý AI không gọi API khi mới mở và không gửi bản ghi bệnh nhân; dữ liệu gửi là ảnh chụp tổng hợp từ Tổng quan, CSV gốc và câu hỏi người dùng. Người dùng đã cung cấp ảnh phản hồi API thật của phiên bản cũ; cần hỏi lại sau khi cập nhật bộ đánh giá 02/11/2026.

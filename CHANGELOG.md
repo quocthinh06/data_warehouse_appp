@@ -1,3 +1,9 @@
+# 0.3.2
+
+- Đồng bộ evaluation_metrics.csv từ bộ Project cuối 02/11/2026, notebook và CSV đã đối chiếu.
+- Cập nhật train/validation/test, ROC-AUC, average precision và ngữ cảnh Groq; không ghi dữ liệu BigQuery hoặc commit dữ liệu bệnh nhân.
+- Bổ sung kiểm thử chống dùng lại bộ đánh giá cũ và hướng dẫn chụp lại báo cáo.
+
 # 0.3.1
 
 - Diabetes Insight: tên ứng dụng và trợ lý thống nhất với chủ đề phân tích tái nhập viện.
